@@ -2,6 +2,7 @@ package gameoflife.ui;
 
 import gameoflife.core.Universe;
 import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
 
 /**
  * This class implements the main GUI screen of the Game of Life simulation
@@ -72,6 +73,11 @@ public class MainScreenFrame extends javax.swing.JFrame {
         jPanelSouth.add(txtHeight);
 
         btnReset.setText("Reset Universe");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
         jPanelSouth.add(btnReset);
 
         btnRun.setText("Run");
@@ -94,6 +100,23 @@ public class MainScreenFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        // TODO add your handling code here:
+        int width;
+        int height;
+        String widthInput = txtWidth.getText();
+        String heightInput = txtHeight.getText();
+        try{
+            width = Integer.parseInt(widthInput);
+            height = Integer.parseInt(heightInput);
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Invalid width/height specified !");
+            return;
+        }
+        universe.setSize(width, height);
+        repaint();
+    }//GEN-LAST:event_btnResetActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,14 +5,17 @@ import gameoflife.core.Universe;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * This is the GUI panel that displays the universe with grid cell marked as black
- * (live) or white (dead).
+ * (live) or white (dead). This panel handles mouse click to set a cell in the universe
+ * alive.
  * 
  * @author
  */
-public class UniversePanel extends javax.swing.JPanel {
+public class UniversePanel extends javax.swing.JPanel implements MouseListener {
 
     /** reference to Universe instance to display in this panel */
     private Universe universe;
@@ -24,8 +27,10 @@ public class UniversePanel extends javax.swing.JPanel {
     public UniversePanel(Universe universe) {
         this.universe = universe;
         initComponents();
+        this.addMouseListener(this);
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,14 +73,45 @@ public class UniversePanel extends javax.swing.JPanel {
         
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
-                Cell cell = universe.getCellAt(i, j);
-                if(cell.isAlive()){
-                    g2d.setColor(Color.black);
+                Cell cell = universe.get(i, j);
+                g2d.setColor(Color.GRAY);
+                if(cell.isAlive()){                    
                     g2d.fillRect(j*cellWidth, i*cellHeight, cellWidth, cellHeight);
+                }
+                else{
+                    g2d.drawRect(j*cellWidth, i*cellHeight, cellWidth, cellHeight);
                 }
             }
         }
         g2d.dispose();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {        
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {        
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {    
+        int mouseX = e.getX();
+        int mouseY = e.getY();
+        int cellWidth = getWidth()/universe.getWidth();
+        int cellHeight = getHeight()/universe.getHeight();
+        int row = mouseY/cellHeight;
+        int col = mouseX/cellWidth;
+        universe.set(row, col, Cell.State.LIVE);
+        repaint();
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {        
     }
 
 

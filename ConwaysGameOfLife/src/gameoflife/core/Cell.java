@@ -9,7 +9,7 @@ package gameoflife.core;
 public class Cell {
     
     /** constants for the state of each cell */
-    enum State { LIVE, DEAD };
+    public enum State { LIVE, DEAD };
     
     /** the state of this cell */
     private State state;
@@ -23,10 +23,29 @@ public class Cell {
         this.state = state;
     }
     
+    /**
+     * Set the state of this cell.
+     * 
+     * @param state the new State of this cell
+     */
+    public void setState(State state){
+        this.state = state;
+    }
+    
+    /**
+     * Check whether this cell is alive or not.
+     * 
+     * @return true if cell is alive, otherwise false
+     */
     public boolean isAlive(){
         return state == State.LIVE;
     }
     
+    /**
+     * Check whether this cell is dead or not.
+     * 
+     * @return true if cell is dead, otherwise false
+     */
     public boolean isDead(){
         return state == State.DEAD;
     }
