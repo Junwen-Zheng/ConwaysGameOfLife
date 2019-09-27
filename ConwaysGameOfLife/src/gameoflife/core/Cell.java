@@ -24,6 +24,14 @@ public class Cell {
     }
     
     /**
+     * Get the state of the cell.
+     * @return the state of this cell
+     */
+    public State getState(){
+        return state;
+    }
+    
+    /**
      * Set the state of this cell.
      * 
      * @param state the new State of this cell
