@@ -3,6 +3,7 @@ package gameoflife.ui;
 import gameoflife.core.Universe;
 import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  * This class implements the main GUI screen of the Game of Life simulation
@@ -19,6 +20,11 @@ public class MainScreenFrame extends javax.swing.JFrame {
     /** instance of the panel displaying the universe */
     private UniversePanel universePanel;
     
+    /** thread that updates the universe */
+    private RunThread runThread = null;
+    
+    /** boolean flag to indicate whether simulation is running */
+    private boolean running = false;
     
     /**
      * Creates new form MainScreenFrame
@@ -82,6 +88,11 @@ public class MainScreenFrame extends javax.swing.JFrame {
         jPanelSouth.add(btnReset);
 
         btnRun.setText("Run");
+        btnRun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRunActionPerformed(evt);
+            }
+        });
         jPanelSouth.add(btnRun);
 
         btnExit.setText("Exit");
@@ -116,6 +127,7 @@ public class MainScreenFrame extends javax.swing.JFrame {
         int height;
         String widthInput = txtWidth.getText();
         String heightInput = txtHeight.getText();
+        running = false; 
         try{
             width = Integer.parseInt(widthInput);
             height = Integer.parseInt(heightInput);
@@ -134,6 +146,38 @@ public class MainScreenFrame extends javax.swing.JFrame {
         helpDlg.setVisible(true);
     }//GEN-LAST:event_btnHelpActionPerformed
 
+    private void btnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunActionPerformed
+        // TODO add your handling code here:
+        if(running)
+            return;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                runThread = new RunThread();
+                runThread.start();
+                running = true;
+            }
+        });
+    }//GEN-LAST:event_btnRunActionPerformed
+
+    /**
+     * Inner thread class that runs the game simulation by creating next generations
+     * of the current Universe at every half of a second.
+     */
+    class RunThread extends Thread {
+
+        public void run() {
+            while (running) {
+                universe = universe.evolve();
+                universePanel.setUniverse(universe);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    //Logger.getLogger(MainScreenFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;

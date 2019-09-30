@@ -30,6 +30,14 @@ public class UniversePanel extends javax.swing.JPanel implements MouseListener {
         this.addMouseListener(this);
     }
 
+    /**
+     * Set the universe.
+     * @param universe the new Universe
+     */
+    public void setUniverse(Universe universe){
+        this.universe = universe;
+        repaint();
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.

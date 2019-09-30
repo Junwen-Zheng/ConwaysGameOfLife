@@ -119,7 +119,7 @@ public class Universe {
                 nextUniv.set(row, col, cell.getState());
                 int aliveNeighborCount = countLiveNeighborsOfCellAt(row, col);
                 if(cell.isAlive()){
-                    if(aliveNeighborCount < 2 || aliveNeighborCount > 3){
+                    if((aliveNeighborCount < 2) || (aliveNeighborCount > 3)) {
                         nextUniv.set(row, col, Cell.State.DEAD);
                     }
                 }
@@ -142,7 +142,7 @@ public class Universe {
      * @return true if position is valid, else false
      */
     private boolean isValidPosition(int row, int col){
-        return (row >= 0 && row < getHeight() && col >= 0 && col < getWidth());
+        return (row >= 0) && (row < getHeight()) && (col >= 0) && (col < getWidth());
     }
     
     /**
@@ -157,11 +157,13 @@ public class Universe {
         int aliveCount = 0;
         for(int dx = -1; dx <= 1; dx++){
             for(int dy = -1; dy <= 1; dy++){
-                int nrow = row+dy;
-                int ncol = col+dx;
-                if(isValidPosition(nrow, ncol) && grid[nrow][ncol].isAlive()){
-                    aliveCount++;
-                }
+                if(!((dx == 0) && (dy == 0))){
+                    int nrow = row+dy;
+                    int ncol = col+dx;
+                    if(isValidPosition(nrow, ncol) && grid[nrow][ncol].isAlive()){
+                        aliveCount++;
+                    }
+                }                
             }
         }
         return aliveCount;
