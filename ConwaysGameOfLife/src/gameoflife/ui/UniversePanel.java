@@ -68,18 +68,18 @@ public class UniversePanel extends javax.swing.JPanel implements MouseListener {
         int rows = universe.getHeight();
         int cols = universe.getWidth();
         
-        int cellWidth = getWidth()/cols;
-        int cellHeight = getHeight()/rows;
+        double cellWidth = getWidth()/cols;
+        double cellHeight = getHeight()/rows;
         
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
                 Cell cell = universe.get(i, j);
                 g2d.setColor(Color.GRAY);
                 if(cell.isAlive()){                    
-                    g2d.fillRect(j*cellWidth, i*cellHeight, cellWidth, cellHeight);
+                    g2d.fillRect((int)(j*cellWidth), (int)(i*cellHeight), (int)cellWidth, (int)cellHeight);
                 }
                 else{
-                    g2d.drawRect(j*cellWidth, i*cellHeight, cellWidth, cellHeight);
+                    g2d.drawRect((int)(j*cellWidth), (int)(i*cellHeight), (int)cellWidth, (int)cellHeight);
                 }
             }
         }
@@ -102,7 +102,13 @@ public class UniversePanel extends javax.swing.JPanel implements MouseListener {
         int cellHeight = getHeight()/universe.getHeight();
         int row = mouseY/cellHeight;
         int col = mouseX/cellWidth;
-        universe.set(row, col, Cell.State.LIVE);
+        Cell cell = universe.get(row, col);
+        if(cell.isAlive()){
+            universe.set(row, col, Cell.State.DEAD);
+        }
+        else{
+            universe.set(row, col, Cell.State.LIVE);
+        }        
         repaint();
     }
 

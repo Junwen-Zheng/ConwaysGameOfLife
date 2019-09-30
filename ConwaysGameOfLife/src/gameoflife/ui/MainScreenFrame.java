@@ -26,11 +26,11 @@ public class MainScreenFrame extends javax.swing.JFrame {
     public MainScreenFrame() {
         initComponents();
         
-        universe = new Universe();
-        
-        universePanel = new UniversePanel(universe);
-        
+        universe = new Universe();        
+        universePanel = new UniversePanel(universe);        
         jPanelCenter.add(universePanel, BorderLayout.CENTER);
+        txtWidth.setText(universe.getWidth()+"");
+        txtHeight.setText(universe.getHeight()+"");
     }
 
     /**
@@ -51,6 +51,7 @@ public class MainScreenFrame extends javax.swing.JFrame {
         btnReset = new javax.swing.JButton();
         btnRun = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        btnHelp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Conway's Game of Life");
@@ -91,6 +92,14 @@ public class MainScreenFrame extends javax.swing.JFrame {
         });
         jPanelSouth.add(btnExit);
 
+        btnHelp.setText("Help");
+        btnHelp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHelpActionPerformed(evt);
+            }
+        });
+        jPanelSouth.add(btnHelp);
+
         getContentPane().add(jPanelSouth, java.awt.BorderLayout.SOUTH);
 
         pack();
@@ -118,9 +127,17 @@ public class MainScreenFrame extends javax.swing.JFrame {
         repaint();
     }//GEN-LAST:event_btnResetActionPerformed
 
+    private void btnHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelpActionPerformed
+        // TODO add your handling code here:
+        HelpDialog helpDlg = new HelpDialog(this, true);
+        helpDlg.setLocationRelativeTo(this);
+        helpDlg.setVisible(true);
+    }//GEN-LAST:event_btnHelpActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnHelp;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnRun;
     private javax.swing.JLabel jLabel1;
